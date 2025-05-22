@@ -236,6 +236,8 @@ app.post('/dealslist', async (request, response) => {
     output.push({ label: 'Empty List', value: '' });
   }
 
+  logger.info(`Returning response: ${JSON.stringify(output)}`)
+
   return response.json({ code: 200, data: output })
 })
 
@@ -293,6 +295,8 @@ app.post('/deals', async (request, response) => {
   }
 
   const html = getDealsHtml2(dealProducts, settings);
+
+  logger.info(`Returning response: ${html}`)
 
   return response.json({
     code: 200,
