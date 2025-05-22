@@ -244,6 +244,7 @@ app.post('/dealslist', async (request, response) => {
 })
 
 app.post('/deals', async (request, response) => {
+  logger.info(`Request received for deals: [${safeStringify(request)}]`)
   const settings = request.body.settings;
 
   logger.info(`Received request to getDeals with params [${JSON.stringify(settings)}]`);
