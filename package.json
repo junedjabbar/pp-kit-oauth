@@ -1,0 +1,12 @@
+{
+  "name": "kitplugin_api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "node --experimental-vm-modules index.js",
+    "test": "jest",
+    "deploy": "serverless deploy"
+  }
+}
