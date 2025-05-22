@@ -1,9 +1,8 @@
 import express from 'express';
 import axios from 'axios';
-import cors from 'cors';
 
-const app = express();
-const PORT = process.env.PORT || 4000;
+const app = express()
+const port = 3001
 
 // Cognito Configuration
 const CLIENT_ID = '5t0e0nahlrnedffj68ouo26cpf';  // Replace with your actual client ID
@@ -13,7 +12,6 @@ const COGNITO_BASE_URI = `https://${COGNITO_DOMAIN}`;
 const REDIRECT_URI = 'https://app.kit.com/apps/install';  // Kit's redirect URI
 
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -65,6 +63,6 @@ app.post('/token', async (req, res) => {
 });
 
 // Start the Express server (this will be automatically handled by Vercel on deployment)
-app.listen(PORT, () => {
-  console.log(`OAuth backend running at http://localhost:${PORT}`);
-});
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`)
+})

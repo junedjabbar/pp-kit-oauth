@@ -1,17 +1,15 @@
 {
-  "name": "kitplugin_api",
+  "name": "pp-kit-oauth",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "node --experimental-vm-modules index.js",
-    "test": "jest",
-    "start": "node --experimental-vm-modules index.js"
+    "start": "node index.js",
+    "dev": "yarn run start"
   },
   "dependencies": {
     "express": "^4.19.2",
-    "axios": "^1.7.7",
-    "cors": "^2.8.5"
+    "axios": "^1.7.7"
   }
 }
