@@ -4,6 +4,8 @@ import axios from 'axios';
 const app = express()
 const port = 3001
 
+const logger = console
+
 // Cognito Configuration
 const CLIENT_ID = '5t0e0nahlrnedffj68ouo26cpf';  // Replace with your actual client ID
 const CLIENT_SECRET = '12s0pl46lp4cpkgojapmsvt24urp2r2rh0rulrjp41jb6kh3g76c';  // Replace with your actual client secret
@@ -215,11 +217,11 @@ const getDealsHtml2 = (products, settings) => {
 };
 
 app.post('/dealslist', async (request, response) => {
-  console.log(`Request received for dealslist: [${safeStringify(request)}]`)
+  logger.info(`Request received for dealslist: [${safeStringify(request)}]`)
 
   const authHeader = request.headers;
 
-  console.log(`AuthHeader is: ${JSON.stringify(authHeader)}`)
+  logger.info(`AuthHeader is: ${JSON.stringify(authHeader)}`)
 
   const token = authHeader['x-vercel-oidc-token'];
 
@@ -248,7 +250,7 @@ app.post('/deals', async (request, response) => {
 
   const authHeader = request.headers;
 
-  console.log(`AuthHeader is: ${JSON.stringify(authHeader)}`)
+  logger.info(`AuthHeader is: ${JSON.stringify(authHeader)}`)
 
   const token = authHeader['x-vercel-oidc-token'];
 
@@ -308,7 +310,7 @@ app.post('/deals', async (request, response) => {
 app.get('/authorize', (req, res) => {
   const { client_id, redirect_uri, response_type, state } = req.query;
 
-  console.log('→ /authorize request received:', req.query);
+  logger.info('→ /authorize request received:', req.query);
 
   // Build the Cognito authorization URL
   const authorizationUrl = `${COGNITO_BASE_URI}/oauth2/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${state}`;
@@ -321,7 +323,7 @@ app.get('/authorize', (req, res) => {
 app.post('/token', async (req, res) => {
   const { code } = req.body;
 
-  console.log('→ /token request received:', req.body);
+  logger.info('→ /token request received:', req.body);
 
   if (!code) {
     return res.status(400).send('Authorization code missing.');
@@ -341,7 +343,7 @@ app.post('/token', async (req, res) => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
 
-    console.log('← Token response:', tokenResponse.data);
+    logger.info('← Token response:', tokenResponse.data);
 
     // Return the token response to the client
     res.json(tokenResponse.data);
@@ -353,5 +355,5 @@ app.post('/token', async (req, res) => {
 
 // Start the Express server (this will be automatically handled by Vercel on deployment)
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`)
+  logger.info(`Server running at http://localhost:${port}`)
 })
