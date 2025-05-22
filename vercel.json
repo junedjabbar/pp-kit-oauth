@@ -1,24 +1,17 @@
 {
-    "version": 2,
-    "builds": [
+    "headers": [
         {
-            "src": "index.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "headers": {
-                "Authorization": "*",
-                "Content-Type": "*",
-                "X-Requested-With": "*",
-                "Accept": "*",
-                "Origin": "*",
-                "X-Kit-Token": "*",
-                "X-Custom-Header": "*"
-            },
-            "dest": "index.js"
+            "source": "/api/(.*)",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Headers",
+                    "value": "Authorization"
+                },
+                {
+                    "key": "Authorization",
+                    "value": "$http_authorization"
+                }
+            ]
         }
     ]
 }
