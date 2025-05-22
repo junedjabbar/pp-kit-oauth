@@ -1,17 +1,18 @@
 {
-    "headers": [
+    "version": 2,
+    "builds": [
         {
-            "source": "/api/(.*)",
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "Authorization"
-                },
-                {
-                    "key": "Authorization",
-                    "value": "$http_authorization"
-                }
-            ]
+            "src": "index.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "headers": {
+                "Authorization": "*"
+            },
+            "dest": "index.js"
         }
     ]
 }
