@@ -92,16 +92,22 @@ app.post('/refresh_token', async (req, res) => {
       }
     );
 
+    const { access_token, expires_in, refresh_token: new_refresh_token } = tokenResponse.data;
+
     logger.info('← Refreshed token response:', tokenResponse.data);
 
-    // Return the refreshed tokens
-    res.json(tokenResponse.data.access_token);
+    // Return the formatted response
+    res.json({
+      access_token,
+      expires_in,
+      refresh_token: new_refresh_token || refresh_token,
+      created_at: Math.floor(Date.now() / 1000),
+    });
   } catch (err) {
     console.error('Refresh token exchange failed:', err.response?.data || err.message);
     res.status(500).json({ error: 'Token refresh failed.' });
   }
 });
-
 
 // Start the Express server (this will be automatically handled by Vercel on deployment)
 app.listen(port, () => {
