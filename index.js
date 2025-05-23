@@ -217,6 +217,8 @@ const getDealsHtml2 = (products, settings) => {
 };
 
 app.post('/dealslist', async (request, response) => {
+  const { key, search } = request.body;
+
   logger.info(`Request received for dealslist: [${safeStringify(request)}]`)
 
   const authHeader = request.headers;
@@ -225,7 +227,7 @@ app.post('/dealslist', async (request, response) => {
 
   const token = authHeader['x-vercel-oidc-token'];
 
-  const apiResponse = await executeApiCall(token, '/creator/lists')
+  const apiResponse = await executeApiCall(key, '/creator/lists')
 
   const apiList = apiResponse?.list || []
   const output = []
@@ -244,6 +246,7 @@ app.post('/dealslist', async (request, response) => {
 })
 
 app.post('/deals', async (request, response) => {
+
   logger.info(`Request received for deals: [${safeStringify(request)}]`)
   const settings = request.body.settings;
 
@@ -255,7 +258,7 @@ app.post('/deals', async (request, response) => {
 
   const token = authHeader['x-vercel-oidc-token'];
 
-  const { list } = settings;
+  const { list, key } = settings;
 
   if (list === 'Empty List') {
     const noListHtml = `
@@ -276,7 +279,7 @@ app.post('/deals', async (request, response) => {
 
   const url = `/creator/lists/${list}`;
 
-  const apiResponse = await executeApiCall(token, url);
+  const apiResponse = await executeApiCall(key, url);
 
   const dealProducts = apiResponse?.products || [];
 
